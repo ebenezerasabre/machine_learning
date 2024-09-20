@@ -1,20 +1,53 @@
+import matplotlib.pyplot as plt
 import numpy
 from scipy import stats
+from sklearn.metrics import r2_score
+import pandas
+from sklearn import linear_model
+from sklearn.preprocessing import StandardScaler
+scale = StandardScaler()
+
+df = pandas.read_csv("data.csv")
 
 
 
-speed = [99,86,87,88,111,86,103,87,94,78,77,85,86]
 
-x = numpy.mean(speed)
 
-x_median = numpy.median(speed)
+# generating random data
+#x = numpy.random.normal(5.0, 1.0, 1000)
+#y = numpy.random.normal(10.0, 2.0, 1000)
 
-x_mode = stats.mode(speed)
+#plt.hist(ages, 100)
 
-print(x)
+X = df[['Weight', 'Volume']]
+y = df['CO2']
 
-print(x_median)
+regr = linear_model.LinearRegression()
 
-print(x_mode)
+
+#predictedCO2 = regr.predict([[2300, 1300]])
+scaledX = scale.fit_transform(X)
+#regr.fit(X,y)
+
+# when scaled
+regr.fit(scaledX, y)
+scaled = scale.transform([[2300, 1.3]])
+
+predictedCO2 = regr.predict([scaled[0]])
+
+print(predictedCO2)
+
+#print(regr.coef_)
+
+#print(scaledX)
+
+
+
+
+
+
+
+
+
 
 
